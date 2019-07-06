@@ -1,0 +1,18 @@
+---
+
+- name: Build the streamer image
+  docker_image:
+    build:
+      path: /opt/services/streamer/
+    name: streamer
+    tag: latest
+    source: build
+
+- name: Create the streamer container
+  docker_container:
+    name: streamer
+    image: streamer:latest
+    state: started
+    detach: yes
+    restart_policy: always
+

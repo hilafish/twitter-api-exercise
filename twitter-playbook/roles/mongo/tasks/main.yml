@@ -1,0 +1,24 @@
+---
+
+- name: install docker-py
+  pip:
+    name: docker-py
+  become: yes
+
+- name: pull the mongo image
+  docker_image:
+    name: mongo
+    source: pull
+  become: yes
+
+- name: Create the mongo container
+  docker_container:
+    name: mongo
+    image: mongo:latest
+    state: started
+    detach: yes
+    exposed_ports:
+      - 27017
+    published_ports:
+      - 27017:27017
+    restart_policy: always

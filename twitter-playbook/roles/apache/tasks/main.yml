@@ -1,0 +1,22 @@
+---
+
+- name: Build the apache image
+  docker_image:
+    build:
+      path: /opt/services/apache/
+    name: apache
+    tag: latest
+    source: build
+
+- name: Create the apache container
+  docker_container:
+    name: apache
+    image: apache:latest
+    state: started
+    exposed_ports:
+      - 80
+    published_ports:
+      - 8080:80
+    restart_policy: always
+    volumes:
+      - "/opt/services/apache/html:/usr/local/apache2/htdocs:rw"

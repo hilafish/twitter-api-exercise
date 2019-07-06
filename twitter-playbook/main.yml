@@ -1,0 +1,8 @@
+- hosts: localhost
+  become: True
+
+  roles:
+   - mongo
+   - streamer
+   - puller
+   - apache

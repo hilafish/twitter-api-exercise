@@ -1,0 +1,24 @@
+---
+
+- name: Build the puller image
+  docker_image:
+    build:
+      path: /opt/services/puller/
+    name: puller
+    tag: latest
+    source: build
+
+- name: Create a data folder for the pulled data
+  file:
+    path: "/opt/services/apache/html"
+    state: directory
+    recurse: yes
+
+- name: Create the puller container
+  docker_container:
+    name: puller
+    image: puller:latest
+    state: started
+    restart_policy: always
+    volumes:
+      - "/opt/services/apache/html:/html:rw"
